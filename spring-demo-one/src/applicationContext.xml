@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- load properties file -->
+	<context:property-placeholder location="classpath:sport.properties"/>
+    <!-- Define your beans here -->
+    
+    <!--  Define the dependency -->
+    <bean id="happyFortune"
+    	class="com.filip.springdemo.HappyFortuneService">
+    </bean>
+    
+    <!-- random fortune bean -->
+    <bean id="randomFortune"
+    	class="com.filip.springdemo.RandomFortune">
+    </bean>
+    
+    <bean id="myFortune"
+    	class="com.filip.springdemo.HappyFortuneService">
+    </bean>
+    
+    <bean id="TrackCoach"
+    	class="com.filip.springdemo.TrackCoach">
+    	
+    	<!-- set up a constructor injection -->
+    	<constructor-arg ref="happyFortune" />
+    </bean>
+    
+    <bean id="BaseballCoach"
+    	class="com.filip.springdemo.BaseballCoach">
+    	
+    	<!-- set up constructor injection -->
+    	<constructor-arg ref="happyFortune" />
+    </bean>
+    
+    <bean id="BasketballCoach"
+    	class="com.filip.springdemo.BasketballCoach">
+    	
+    	<!-- set up a constructor injection -->
+    	<constructor-arg ref="happyFortune"/>
+    </bean>
+    
+    <!-- My Coach -->
+    <bean id="myCoach"
+    	class="com.filip.springdemo.BasketballCoach">
+    	
+    	<!-- set up a constructor injection -->
+    	<constructor-arg ref="myFortune" />
+    </bean>
+    
+    <bean id="myCricketCoach"
+    	class="com.filip.springdemo.CricketCoach">
+    	
+    	<!-- set up setters injection -->
+    	<property name="fortuneService" ref="randomFortune" />
+    	
+    	<!-- insert literal values -->
+    	<property name="emailAddress" value="${foo.email}" />
+    	<property name="team" value="${foo.team}" />
+    </bean>
+    
+    
+    
+    <bean id="myLoggerConfig" class="com.filip.springdemo.MyLoggerConfig" init-method="initLogger">
+    	<property name="rootLoggerLevel" value="FINEST" />
+    	<property name="printedLoggerLevel" value="FINEST"/>
+    </bean>
+</beans>
+
+
+
+
+
